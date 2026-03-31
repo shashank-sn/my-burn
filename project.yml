@@ -1,0 +1,29 @@
+name: MyBurn
+options:
+  bundleIdPrefix: com.shasha
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  createIntermediateGroups: true
+
+targets:
+  MyBurn:
+    type: application
+    platform: macOS
+    sources:
+      - MyBurn
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.shasha.MyBurn
+        PRODUCT_NAME: MyBurn
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 1
+        SWIFT_VERSION: 5.9
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        CODE_SIGN_ENTITLEMENTS: MyBurn/MyBurn.entitlements
+        INFOPLIST_FILE: MyBurn/Info.plist
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+    dependencies:
+      []

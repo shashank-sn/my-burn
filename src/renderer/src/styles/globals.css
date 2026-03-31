@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #0a0a0c;
+  color: #F0F0F0;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ── Theme variables ─────────────────────────────────────────────────── */
+
+[data-theme="glass"] {
+  --panel-bg:        rgba(14, 14, 18, 0.72);
+  --elevated-bg:     rgba(255, 255, 255, 0.07);
+  --card-bg:         rgba(255, 255, 255, 0.05);
+  --panel-border:    rgba(255, 255, 255, 0.11);
+  --panel-blur:      blur(22px) saturate(180%);
+  --panel-shadow:    0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --panel-radius:    16px;
+  --card-radius:     12px;
+  --row-hover-bg:    rgba(255, 255, 255, 0.04);
+  --accent-glow:     0 0 24px rgba(255, 77, 0, 0.32);
+  --neo-card-shadow: none;
+  --border-width:    1px;
+  --btn-radius:      10px;
+  --input-bg:        rgba(255, 255, 255, 0.06);
+  --input-border:    rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="neo"] {
+  --panel-bg:        #161616;
+  --elevated-bg:     #1F1F1F;
+  --card-bg:         #252525;
+  --panel-border:    rgba(255, 255, 255, 0.85);
+  --panel-blur:      none;
+  --panel-shadow:    none;
+  --panel-radius:    4px;
+  --card-radius:     4px;
+  --row-hover-bg:    #1F1F1F;
+  --accent-glow:     none;
+  --neo-card-shadow: 3px 3px 0 #FF4D00;
+  --border-width:    2px;
+  --btn-radius:      4px;
+  --input-bg:        #0D0D0D;
+  --input-border:    rgba(255, 255, 255, 0.5);
+}
+
+/* ── Utility classes ─────────────────────────────────────────────────── */
+
+/* Side panels (sidebar, analytics) */
+.glass-panel {
+  background: var(--panel-bg) !important;
+  backdrop-filter: var(--panel-blur);
+  -webkit-backdrop-filter: var(--panel-blur);
+}
+
+/* Floating cards / modals */
+.glass-card {
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  -webkit-backdrop-filter: var(--panel-blur);
+  border: var(--border-width) solid var(--panel-border);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+}
+
+/* Stat tiles, inner cards */
+.glass-elevated {
+  background: var(--elevated-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--neo-card-shadow);
+}
+
+/* Inline section boxes (free trial, annual option) */
+.glass-section {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--card-radius);
+}
+
+/* Dividers */
+.theme-divider {
+  border-color: var(--panel-border) !important;
+}
+
+/* Row hover */
+.sub-row:hover {
+  background: var(--row-hover-bg) !important;
+}
+
+/* Dynamic border override for the global border-border class */
+[data-theme="glass"] .border-border { border-color: var(--panel-border) !important; }
+[data-theme="neo"]   .border-border { border-color: var(--panel-border) !important; }
+
+/* bg-surface and bg-elevated override in glass mode */
+[data-theme="glass"] .bg-surface  { background: var(--panel-bg)    !important; }
+[data-theme="glass"] .bg-elevated { background: var(--elevated-bg) !important; }
+
+/* Neo panel overrides — thicker borders on structural panels */
+[data-theme="neo"] .glass-panel {
+  border-right: var(--border-width) solid var(--panel-border) !important;
+  border-bottom: none !important;
+}
+[data-theme="neo"] .glass-panel-bottom {
+  border-top: var(--border-width) solid var(--panel-border) !important;
+}
+
+/* Neo card accent shadow */
+[data-theme="neo"] .glass-elevated {
+  box-shadow: var(--neo-card-shadow);
+}
+[data-theme="neo"] .glass-card {
+  box-shadow: 4px 4px 0 #FF4D00;
+}
+
+/* Accent button glow in glass mode */
+[data-theme="glass"] .btn-accent {
+  box-shadow: var(--accent-glow);
+}
+
+/* Input styling via CSS vars */
+.theme-input {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: var(--btn-radius) !important;
+  color: #F0F0F0;
+  font-family: inherit;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: border-color 0.15s;
+  -webkit-app-region: no-drag;
+}
+.theme-input:focus {
+  outline: none;
+  border-color: #FF4D00 !important;
+}
+.theme-input::placeholder { color: #5A5A5A; }
+select.theme-input option { background: #1F1F1F; }
+
+/* Theme toggle button */
+.theme-toggle {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.18s;
+  -webkit-app-region: no-drag;
+}
+[data-theme="glass"] .theme-toggle {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+}
+[data-theme="glass"] .theme-toggle:hover {
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+}
+[data-theme="neo"] .theme-toggle {
+  background: #FF4D00;
+  border: 2px solid #fff;
+  color: #fff;
+  box-shadow: 2px 2px 0 #fff;
+}
+[data-theme="neo"] .theme-toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #fff;
+}
+
+/* ── macOS chrome ─────────────────────────────────────────────────────── */
+
+.drag-region {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* ── Scrollbars ───────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Focus ────────────────────────────────────────────────────────────── */
+
+*:focus-visible {
+  outline: 2px solid #FF4D00;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input, textarea, select {
+  -webkit-app-region: no-drag;
+}
+
+/* ── Animations ───────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.18s ease-out;
+}
+
+/* Neo brutalism text emphasis */
+[data-theme="neo"] h1,
+[data-theme="neo"] h2 {
+  letter-spacing: -0.01em;
+}
+[data-theme="neo"] .text-2xl { font-size: 1.6rem; font-weight: 800; }
